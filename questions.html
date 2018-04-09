@@ -1,5 +1,7 @@
 <div>
 	<input type="text" placeholder="search" ng-model="search" id="search" ng-keypress="($event.charCode==13)? submit_search() : return"> <button ng-click="dismiss()" ng-show="!nofilter">cancel</button><br>
+	<div ng-show="share"><input placeholder="Email to Share Screen" type="email" ng-model="share_screen" ng-keypress="($event.charCode==13)? sharescreen() : return"><i ng-show='sending' class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>{{reply_email}}</div>
+	<i ng-show='getting' class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
 	<span ng-repeat="x in names">
 		<h5>{{x.id}}</h5>
 		<h1>{{x.question}}</h1>

@@ -40,7 +40,10 @@ mainApp.controller('questionsController', function($scope, $routeParams, $http, 
     $scope.browsed = false;
     $scope.getting = true;
     $http.get("https://private-anon-46dbe5368f-blissrecruitmentapi.apiary-mock.com/questions?10&0&")
-    .then(function (response) {$scope.names = response.data;});
+    .then(function (response) {$scope.names = response.data;})
+    .catch(function (data) {
+        console.log(data);
+    });;
     $scope.getting = false;
 
     $scope.getmore = function(){
@@ -58,7 +61,10 @@ mainApp.controller('questionsController', function($scope, $routeParams, $http, 
                     $scope.news++;
                 }
             }
-        });
+        })
+        .catch(function (data) {
+            console.log(data);
+        });;
         $scope.browsing = false;
         $scope.browsed = true;
     }
@@ -68,6 +74,7 @@ mainApp.controller('questionsController', function($scope, $routeParams, $http, 
     $scope.limit = 10;
     $scope.browsed = false;
     $scope.getting = true;
+    $scope.sending = false;
     $scope.nofilter = true;
     $scope.detail_view = false;
     $scope.share = false;
@@ -80,7 +87,10 @@ mainApp.controller('questionsController', function($scope, $routeParams, $http, 
             $scope.detail_view = true;
             $scope.share = true;
             $http.get("https://private-anon-46dbe5368f-blissrecruitmentapi.apiary-mock.com/questions/" + question_id)
-            .then(function (response) {$scope.quest_detail = response.data;});
+            .then(function (response) {$scope.quest_detail = response.data;})
+            .catch(function (data) {
+                console.log(data);
+            });
             $scope.getting = false;
         }
     } else if(typeof(question_filter) !== 'undefined'){
@@ -91,14 +101,20 @@ mainApp.controller('questionsController', function($scope, $routeParams, $http, 
                 $scope.nofilter = false;
                 $scope.share = true;
                 $http.get("https://private-anon-46dbe5368f-blissrecruitmentapi.apiary-mock.com/questions?0&0&"+question_filter)
-                .then(function (response) {$scope.list = response.data;});
+                .then(function (response) {$scope.list = response.data;})
+                .catch(function (data) {
+                    console.log(data);
+                });;
                 $scope.getting = false;
             }
         }
     }
     if($scope.nofilter){
         $http.get("https://private-anon-46dbe5368f-blissrecruitmentapi.apiary-mock.com/questions?10&0&")
-        .then(function (response) {$scope.names = response.data;});
+        .then(function (response) {$scope.names = response.data;})
+        .catch(function (data) {
+            console.log(data);
+        });;
         $scope.getting = false;
     }
 
@@ -122,7 +138,10 @@ mainApp.controller('questionsController', function($scope, $routeParams, $http, 
                     $scope.news++;
                 }
             }
-        });
+        })
+        .catch(function (data) {
+            console.log(data);
+        });;
         $scope.browsing = false;
         $scope.browsed = true;
     }
@@ -133,5 +152,29 @@ mainApp.controller('questionsController', function($scope, $routeParams, $http, 
 
     $scope.detail = function(id){
         $window.location.href = 'index.html#!/questions?question_id='+id;
+    }
+
+    $scope.sharescreen = function(){
+        $scope.reply_email = "";
+        $scope.sending = true;
+        if($scope.share_screen){
+            $http.post("https://private-anon-46dbe5368f-blissrecruitmentapi.apiary-mock.com/share?"+$scope.share_screen+"&"+$location.absUrl())
+            .then(function (response) {
+                if(response.data.status=="OK"){
+                    $scope.sending = false;
+                    $scope.reply_email = "email sent!";
+                } else{
+                    $scope.sending = false;
+                    $scope.reply_email = "error!";
+                }
+            })
+            .catch(function (data) {
+                $scope.sending = false;
+                $scope.reply_email = "error! [" + data + "]";
+            });;
+        } else{
+            $scope.sending = false;
+            $scope.reply_email = "invalid email!";
+        }
     }
 });
