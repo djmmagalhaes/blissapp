@@ -1,5 +1,5 @@
 <div>
-	<i ng-show='getting' class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+	<input type="text" placeholder="search" ng-model="search" id="search" ng-keypress="($event.charCode==13)? submit_search() : return"> <button ng-click="dismiss()" ng-show="!nofilter">cancel</button><br>
 	<span ng-repeat="x in names">
 		<h5>{{x.id}}</h5>
 		<h1>{{x.question}}</h1>
@@ -12,5 +12,23 @@
 		</table>
 		<h5>Published at {{x.published_at}}</h5>
 	</span>
-	<a ng-click="getmore()">Browse Additional Records</a><i ng-show='browsing' class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i> <span ng-show="browsed">( {{news}} new regs )</span>
+	<span ng-repeat="x in list"">
+		<pre ng-click="detail(x.id)">{{x}}</pre>
+	</span>
+	<a ng-show="nofilter" ng-click="getmore()">Browse Additional Records</a><i ng-show='browsing' class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i> <span ng-show="browsed">( {{news}} new regs )</span>
+	<div ng-show="detail_view">
+		<h5>{{quest_detail.id}}</h5>
+		<h1>{{quest_detail.question}}</h1>
+		<img ng-src="{{quest_detail.image_url}}">
+		<table>
+			<tr ng-repeat="y in quest_detail.choices">
+				<td>{{y.choice}} :</td>
+				<td> {{y.votes}}</td>
+			</tr>
+		</table>
+		<h5>Published at {{quest_detail.published_at}}</h5>
+	</div>
+
+
+
 </div>
