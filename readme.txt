@@ -1,0 +1,1 @@
+chrome.ex --disable-web-security --user-data-dir
