@@ -1,1 +1,4 @@
-chrome.ex --disable-web-security --user-data-dir
+open chrome with security disable
+	open command prompt
+		browse chrome directory
+		chrome.exe --disable-web-sec	urity --user-data-dir

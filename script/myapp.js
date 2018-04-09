@@ -10,6 +10,9 @@ mainApp.config(function($routeProvider) {
             templateUrl: 'questions.html',
             controller: 'questionsController'
         })
+        .when('/offline', {
+            templateUrl: 'offline.html'
+        })
         .otherwise({
             redirectTo: '/connection'
         });
@@ -177,4 +180,20 @@ mainApp.controller('questionsController', function($scope, $routeParams, $http, 
             $scope.reply_email = "invalid email!";
         }
     }
+});
+
+mainApp.run(function($window, $rootScope, $location) {
+    $rootScope.online = navigator.onLine;
+    $rootScope.url = $location.absUrl();
+    $window.addEventListener("offline", function () {
+        $rootScope.$apply(function() {
+            $rootScope.url = $location.absUrl();
+            $window.location.href = 'index.html#!/offline';
+        });
+    }, false);
+    $window.addEventListener("online", function () {
+        $rootScope.$apply(function() {
+            $window.location.href = $rootScope.url;
+        });
+    }, false);
 });
