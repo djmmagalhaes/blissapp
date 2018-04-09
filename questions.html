@@ -1,0 +1,16 @@
+<div>
+	<i ng-show='getting' class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+	<span ng-repeat="x in names">
+		<h5>{{x.id}}</h5>
+		<h1>{{x.question}}</h1>
+		<a target="_blank" href="{{x.image_url}}"><img ng-src="{{x.thumb_url}}"></a>
+		<table>
+			<tr ng-repeat="y in x.choices">
+				<td>{{y.choice}} :</td>
+				<td> {{y.votes}}</td>
+			</tr>
+		</table>
+		<h5>Published at {{x.published_at}}</h5>
+	</span>
+	<a ng-click="getmore()">Browse Additional Records</a><i ng-show='browsing' class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i> <span ng-show="browsed">( {{news}} new regs )</span>
+</div>
